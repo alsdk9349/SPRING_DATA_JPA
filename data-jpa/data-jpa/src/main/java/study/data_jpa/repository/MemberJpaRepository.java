@@ -33,9 +33,9 @@ public class MemberJpaRepository {
         return Optional.ofNullable(member);
     }
 
-    public long count() {
-        
-    }
+//    public long count() {
+//
+//    }
 
     public Member find(Long id) {
         return em.find(Member.class, id);
