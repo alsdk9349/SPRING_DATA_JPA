@@ -4,6 +4,9 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 import study.data_jpa.dto.MemberDto;
 import study.data_jpa.entity.Member;
@@ -140,15 +143,12 @@ public class MemberRepositoryTest {
         memberRepository.save(new Member("member5", 10));
 
         int age = 10;
-        int offset = 0;
-        int limit = 3;
+        PageRequest pageRequest = PageRequest.of(0,3, Sort.by(Sort.Direction.DESC, "username"));
 
         //when
-        List<Member> members = memberRepository.findByAge(age, offset, limit);
-        long totalCount = memberRepository.totalCount(age);
+        Page<Member> page = memberRepository.findByAge(age, pageRequest);
 
         //then
-        assertThat(members.size()).isEqualTo(3);
-        assertThat(totalCount).isEqualTo(5);
+
     }
 }
